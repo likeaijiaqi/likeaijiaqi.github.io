@@ -138,9 +138,9 @@ code {
   background-color: #f8f8f8;
 }
 .outer {
-  max-width: 1600px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 60px;
 }
 .outer:before,
 .outer:after {
