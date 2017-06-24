@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>spring boot 学习--搭建ssmm框架02 | java程序猿</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="接上篇——-开始来配置springmvc，并测试 思路： - web.xml配置servlet - springmvc配置文件 - 创建TestController - 创建测试页面 - 基本测试 - 乱码测试 - 时间测试">
+<meta name="keywords" content="springBoot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring boot 学习--搭建ssmm框架02">
+<meta property="og:url" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/index.html">
+<meta property="og:site_name" content="java程序猿">
+<meta property="og:description" content="接上篇——-开始来配置springmvc，并测试 思路： - web.xml配置servlet - springmvc配置文件 - 创建TestController - 创建测试页面 - 基本测试 - 乱码测试 - 时间测试">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474350372140.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474350407165.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474350699561.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474350824131.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474350947881.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474350975532.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474351083037.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474351225693.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474351388995.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474351402007.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474351949537.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474351964257.png">
+<meta property="og:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474351972992.png">
+<meta property="og:updated_time" content="2017-06-24T10:28:18.282Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring boot 学习--搭建ssmm框架02">
+<meta name="twitter:description" content="接上篇——-开始来配置springmvc，并测试 思路： - web.xml配置servlet - springmvc配置文件 - 创建TestController - 创建测试页面 - 基本测试 - 乱码测试 - 时间测试">
+<meta name="twitter:image" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/1474350372140.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">java程序猿</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">主页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">like</h2>
+            <h3 id="title">Web 开发攻城狮 &amp; Java开发攻城狮</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>中国，成都</span>
+            <a id="follow" target="_blank" href="https://github.com/likeaijiaqi/likeaijiaqi.github.io">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                3
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                1
+                <span>标签</span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-spring-boot-学习-搭建ssmm框架02" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        <header class="article-header">
+            
+    
+        <h1 class="article-title" itemprop="name">
+            spring boot 学习--搭建ssmm框架02
+        </h1>
+    
+
+            
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/06/24/spring-boot-学习-搭建ssmm框架02/">
+            <time datetime="2017-06-24T10:26:06.000Z" itemprop="datePublished">2017-06-24</time>
+        </a>
+    </div>
+
+
+                
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/springBoot/">springBoot</a>
+    </div>
+
+            </div>
+            
+        </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+            
+            <p>接上篇——-开始来配置springmvc，并测试</p>
+<p>思路：</p>
+<pre><code>- web.xml配置servlet
+- springmvc配置文件
+- 创建TestController
+- 创建测试页面
+- 基本测试
+- 乱码测试
+- 时间测试
+</code></pre><a id="more"></a>
+<p>（1）web.xml配置springmvc</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- springmvc servlet配置 --&gt;</span></div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">servlet</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>front<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:spring-mvc.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>front<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>（2）创建spring-mvc.xml 文件<br>    springmvc 配置扫描，自动装配，JSP解析<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">   <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.study"</span> <span class="attr">use-default-filters</span>=<span class="string">"false"</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!--扫描 cn.itcast下的 所有类中  注解是 Controller的类 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">context:include-filter</span> <span class="attr">type</span>=<span class="string">"annotation"</span> <span class="attr">expression</span>=<span class="string">"org.springframework.stereotype.Controller"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div><div class="line"><span class="comment">&lt;!--自动装配 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Jsp的视图解析器 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"jspViewResolver"</span>  <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/view/"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>（3）创建TestController<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.study.controller;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.study.bean.TestTb;</div><div class="line"></div><div class="line">Controller</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@RequestMapping</span>(<span class="string">"/test/springmvc/testTbAdd"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">test_testtb</span><span class="params">(TestTb tb)</span></span>&#123;</div><div class="line"></div><div class="line">		System.out.println(tb.toString());</div><div class="line"></div><div class="line">		<span class="keyword">return</span> <span class="string">"success"</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>(4)创建测试页面和success页面,src/main/webapp/下创建index.jsp ,<strong>注意修改编码</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">%@</span> <span class="attr">page</span> <span class="attr">language</span>=<span class="string">"java"</span> <span class="attr">contentType</span>=<span class="string">"text/html; charset=UTF-8"</span></span></div><div class="line">    <span class="attr">pageEncoding</span>=<span class="string">"UTF-8"</span>%&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=UTF-8"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Insert title here<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"test/springmvc/testTbAdd.do"</span> <span class="attr">method</span>=<span class="string">"POST"</span>&gt;</span></div><div class="line">		名称：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在webapp/WEB-INF/view/下创建success.jsp</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">%@</span> <span class="attr">page</span> <span class="attr">language</span>=<span class="string">"java"</span> <span class="attr">contentType</span>=<span class="string">"text/html; charset=UTF-8"</span></span></div><div class="line">    <span class="attr">pageEncoding</span>=<span class="string">"UTF-8"</span>%&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=UTF-8"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Insert title here<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	添加成功！</div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>(5)开始基本测试<br>访问<a href="http://localhost:8080/boot-study-ssmm-xml/" target="_blank" rel="external">http://localhost:8080/boot-study-ssmm-xml/</a></p>
+<p><img src="./1474350372140.png" alt="Alt text"></p>
+<p>基本测试结果：</p>
+<p><img src="./1474350407165.png" alt="Alt text"></p>
+<p>（6）在TestController中添加方法，开始中文测试<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">RequestMapping(value=<span class="string">"/test/unicode"</span>,produces = <span class="string">"plain/html; charset=UTF-8"</span>)</div><div class="line">	<span class="keyword">public</span> <span class="meta">@ResponseBody</span> <span class="function">String <span class="title">test_unicode</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">		<span class="keyword">return</span> <span class="string">"成功"</span>;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>访问：<br><a href="http://localhost:8080/boot-study-ssmm-xml/test/unicode.do" target="_blank" rel="external">http://localhost:8080/boot-study-ssmm-xml/test/unicode.do</a></p>
+<p>中文测试返回结果:<br><img src="./1474350699561.png" alt="Alt text"></p>
+<p>解决办法</p>
+<ol>
+<li>在web.xml 中添加字符拦截器,<strong>注意加载到所有servlet,filter的前面</strong><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>中文测试继续测试</p>
+<p><img src="./1474350824131.png" alt="Alt text"></p>
+<p>这是为什么喃，我们加载了字符拦截器，好像还是不行，但是在访问<a href="http://localhost:8080/boot-study-ssmm-xml/" target="_blank" rel="external">http://localhost:8080/boot-study-ssmm-xml/</a>   这个接口的时候输入中文，后台是可以接收了</p>
+<p><img src="./1474350947881.png" alt="Alt text"></p>
+<p><img src="./1474350975532.png" alt="Alt text"></p>
+<p>继续解决我们直接返回中文字符串的问题，这里是因为@ResponseBody 注解，这个注解返回的String,springmvc会直接用org.springframework.http.converter.StringHttpMessageConverter 来进行转发，这个默然的编码是：ISO-8859-1<br><img src="./1474351083037.png" alt="Alt text"></p>
+<p>明白了，现在我们可以在springmvc中配置这个StringHttpMessageConverter 的编码<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;bean  class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" &gt;</div><div class="line">    &lt;property name="messageConverters"&gt;</div><div class="line">         &lt;list&gt;</div><div class="line">             &lt;bean class = "org.springframework.http.converter.StringHttpMessageConverter"&gt;</div><div class="line">                &lt;property name = "supportedMediaTypes"&gt;</div><div class="line">                     &lt;list&gt;</div><div class="line">                         &lt;value&gt;text/plain;charset=UTF-8&lt;/value&gt;</div><div class="line">                     &lt;/list&gt;</div><div class="line">                &lt;/property&gt;</div><div class="line">             &lt;/bean&gt;</div><div class="line">         &lt;/list&gt;</div><div class="line">    &lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>中文测试继续测试2</p>
+<p>结果：<br><img src="./1474351225693.png" alt="Alt text"></p>
+<p>（7）时间测试</p>
+<p>index.jsp修改如下<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">%@</span> <span class="attr">page</span> <span class="attr">language</span>=<span class="string">"java"</span> <span class="attr">contentType</span>=<span class="string">"text/html; charset=UTF-8"</span></span></div><div class="line">    <span class="attr">pageEncoding</span>=<span class="string">"UTF-8"</span>%&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=UTF-8"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Insert title here<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"test/springmvc/testTbAdd.do"</span> <span class="attr">method</span>=<span class="string">"POST"</span>&gt;</span></div><div class="line">		名称：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></div><div class="line">	 	生日：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"birthday"</span>/&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>时间测试：</p>
+<p><img src="./1474351388995.png" alt="Alt text"></p>
+<p><img src="./1474351402007.png" alt="Alt text"></p>
+<p>400，错误，估计就是时间类型不匹配，我们在TestController中绑定一个时间解析来试试<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 注册日期格式</div><div class="line"> * <span class="doctag">@param</span> request</div><div class="line"> * <span class="doctag">@param</span> binder</div><div class="line"> */</div><div class="line"><span class="meta">@InitBinder</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InitBinder</span><span class="params">(HttpServletRequest request ,ServletRequestDataBinder binder)</span></span>&#123;</div><div class="line">	DateFormat df = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>);</div><div class="line">	binder.registerCustomEditor(Date.class, <span class="keyword">new</span> CustomDateEditor(df, <span class="keyword">false</span>));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>时间测试1<br><img src="./1474351949537.png" alt="Alt text"></p>
+<p>时间测试结果：<br><img src="./1474351964257.png" alt="Alt text"></p>
+<p><img src="./1474351972992.png" alt="Alt text"></p>
+<p>OK，到此所有的都大功告成</p>
+<p>补充一下：时间转换器也可以全区配置，在springmvc中，配置如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 全局时间配置 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"webBindingInitializer"</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!-- 自定义事件处理器 --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">bean</span>  <span class="attr">class</span>= <span class="string">"com.study.util.BindindInitializer"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.study.util;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.text.DateFormat;</div><div class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</div><div class="line"><span class="keyword">import</span> java.util.Date;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.propertyeditors.CustomDateEditor;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.WebDataBinder;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.support.WebBindingInitializer;</div><div class="line"><span class="keyword">import</span> org.springframework.web.context.request.WebRequest;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BindindInitializer</span> <span class="keyword">implements</span> <span class="title">WebBindingInitializer</span></span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initBinder</span><span class="params">(WebDataBinder binder, WebRequest request)</span> </span>&#123;</div><div class="line">		DateFormat df = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>);</div><div class="line">		binder.registerCustomEditor(Date.class, <span class="keyword">new</span> CustomDateEditor(df, <span class="keyword">false</span>));</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下篇就正式进入springboot的开发了</p>
+<p>欢迎转载，但转载请注明来自 www.likeoak.com，并保持转载后文章内容的完整。本人保留所有版权相关权利</p>
+<p>本文链接：<a href="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/">http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/</a></p>
+
+            
+        </div>
+
+
+        
+
+        
+        <!-- css -->
+        <style type="text/css">
+            .center {
+                text-align: center;
+            }
+            .hidden {
+                display: none;
+            }
+            .donate_bar a.btn_donate{
+                display: inline-block;
+                width: 82px;
+                height: 82px;
+                background: url("http://7xsl28.com1.z0.glb.clouddn.com/btn_reward.gif") no-repeat;
+                _background: url("http://7xsl28.com1.z0.glb.clouddn.com/btn_reward.gif") no-repeat;
+
+            <!-- http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif
+            因为本 hexo 生成的博客所用的 theme 的 a:hover 带动画效果，
+            为了在让打赏按钮显示效果正常 而 添加了以下几行 css，
+            嵌入其它博客时不一定要它们。 -->
+                -webkit-transition: background 0s;
+                -moz-transition: background 0s;
+                -o-transition: background 0s;
+                -ms-transition: background 0s;
+                transition: background 0s;
+            <!-- /让打赏按钮的效果显示正常 而 添加的几行 css 到此结束 -->
+            }
+
+            .donate_bar a.btn_donate:hover{ background-position: 0px -82px;}
+            .donate_bar .donate_txt {
+                display: block;
+                color: #9d9d9d;
+                font: 14px/2 "Microsoft Yahei";
+            }
+            .bold{ font-weight: bold; }
+        </style>
+        <!-- /css -->
+
+        <!-- Donate Module -->
+        <div id="donate_module">
+
+            <!-- btn_donate & tips -->
+            <div id="donate_board" class="donate_bar center">
+                <br>
+                ------------------------------------------------------------------------------------------------------------------------------
+                <br>
+                <a id="btn_donate" class="btn_donate" target="_self" href="javascript:;" title="Donate 打赏"></a>
+    <span class="donate_txt">
+      Enjoy it ? Donate me !  欣赏此文？求鼓励，求支持！
+    </span>
+
+
+            </div>
+            <!-- /btn_donate & tips -->
+
+            <!-- donate guide -->
+
+            <div id="donate_guide" class="donate_bar center hidden">
+                <br>
+                ------------------------------------------------------------------------------------------------------------------------------
+                <br>
+
+                <a href="http://os1nquf60.bkt.clouddn.com/weixin.png" title="用微信扫一扫哦~" class="fancybox" rel="article0">
+                    <img src="http://os1nquf60.bkt.clouddn.com/weixin.png" title="微信打赏 like" height="190px" width="auto"/>
+                </a>
+
+
+
+                <a href="http://os1nquf60.bkt.clouddn.com/aipay.png" title="用支付宝扫一扫即可~" class="fancybox" rel="article0">
+                    <img src="http://os1nquf60.bkt.clouddn.com/aipay.png" title="支付宝打赏 like" height="190px" width="auto"/>
+                </a>
+
+    <span class="donate_txt">
+      Enjoy it ? Donate me !  欣赏此文？求鼓励，求支持！
+    </span>
+
+            </div>
+            <!-- /donate guide -->
+
+            <!-- donate script -->
+            <script type="text/javascript">
+                document.getElementById('btn_donate').onclick = function() {
+                    $('#donate_board').addClass('hidden');
+                    $('#donate_guide').removeClass('hidden');
+                }
+
+                function donate_on_web(){
+                    $('#donate').submit();
+                }
+
+                var original_window_onload = window.onload;
+                window.onload = function () {
+                    if (original_window_onload) {
+                        original_window_onload();
+                    }
+                    document.getElementById('donate_board_wdg').className = 'hidden';
+                }
+            </script>
+            <!-- /donate script -->
+        </div>
+        <!-- /Donate Module -->
+        
+
+
+        
+
+
+
+
+
+
+
+
+        <footer class="article-footer">
+            <div class="share-container">
+
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+</div>
+
+          <!--  
+    
+        <a href="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/#comments" class="article-comment-link ds-thread-count" data-thread-key="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架02/">评论</a>
+    
+-->
+        </footer>
+    </div>
+    
+    
+<nav id="article-nav">
+    
+    
+        <a href="/2017/06/24/spring-boot-学习-搭建ssmm框架01/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">spring boot 学习--搭建ssmm框架01</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+
+    
+        <section id="comments"><div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href,
+    sourceId: "",
+    productKey: "11f97202006a4688905963e8c3a9f5ce",
+    target: "cloud-tie-wrapper"
+  };
+  var yunManualLoad = true;
+  Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+</script>
+</section>
+    
+
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/24/spring-boot-学习-搭建ssmm框架02/" class="title">spring boot 学习--搭建ssmm框架02</a></p>
+                            <p class="item-date"><time datetime="2017-06-24T10:26:06.000Z" itemprop="datePublished">2017-06-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/24/spring-boot-学习-搭建ssmm框架01/" class="title">spring boot 学习--搭建ssmm框架01</a></p>
+                            <p class="item-date"><time datetime="2017-06-24T10:21:06.000Z" itemprop="datePublished">2017-06-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/24/spring-boot-学习-搭建ssmm框架03/" class="title">spring boot 学习--搭建ssmm框架03</a></p>
+                            <p class="item-date"><time datetime="2017-06-24T09:36:06.000Z" itemprop="datePublished">2017-06-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/springBoot/">springBoot</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/springBoot/" style="font-size: 10px;">springBoot</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+               <!-- 
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                -->
+
+                <li>
+                    <a href="http://blog.csdn.net/javastudyr">csdn博客连接</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 like<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        <!--
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href,
+    sourceId: "",
+    productKey: "11f97202006a4688905963e8c3a9f5ce",
+    target: "cloud-tie-wrapper"
+  };
+  var yunManualLoad = true;
+  Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+</script>
+
+
+-->
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

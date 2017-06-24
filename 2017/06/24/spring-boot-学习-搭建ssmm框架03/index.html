@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>spring boot 学习--搭建ssmm框架03 | java程序猿</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="继续接上篇—–，这篇开始来搭建springboot方式的ssmm框架 思路 - 创建一个maven项目 - 配置pom.xml - 创建application.properties文件 - 配置mybatis，事物，数据库等信息 - 配置springmvc - 创建启动类 - 创建测试类 - 开始测试 1.创建一个maven项目">
+<meta name="keywords" content="springBoot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring boot 学习--搭建ssmm框架03">
+<meta property="og:url" content="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架03/index.html">
+<meta property="og:site_name" content="java程序猿">
+<meta property="og:description" content="继续接上篇—–，这篇开始来搭建springboot方式的ssmm框架 思路 - 创建一个maven项目 - 配置pom.xml - 创建application.properties文件 - 配置mybatis，事物，数据库等信息 - 配置springmvc - 创建启动类 - 创建测试类 - 开始测试 1.创建一个maven项目">
+<meta property="og:updated_time" content="2017-06-24T10:25:11.148Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring boot 学习--搭建ssmm框架03">
+<meta name="twitter:description" content="继续接上篇—–，这篇开始来搭建springboot方式的ssmm框架 思路 - 创建一个maven项目 - 配置pom.xml - 创建application.properties文件 - 配置mybatis，事物，数据库等信息 - 配置springmvc - 创建启动类 - 创建测试类 - 开始测试 1.创建一个maven项目">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">java程序猿</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">主页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">like</h2>
+            <h3 id="title">Web 开发攻城狮 &amp; Java开发攻城狮</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>中国，成都</span>
+            <a id="follow" target="_blank" href="https://github.com/likeaijiaqi/likeaijiaqi.github.io">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                3
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                1
+                <span>标签</span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-spring-boot-学习-搭建ssmm框架03" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        <header class="article-header">
+            
+    
+        <h1 class="article-title" itemprop="name">
+            spring boot 学习--搭建ssmm框架03
+        </h1>
+    
+
+            
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/06/24/spring-boot-学习-搭建ssmm框架03/">
+            <time datetime="2017-06-24T09:36:06.000Z" itemprop="datePublished">2017-06-24</time>
+        </a>
+    </div>
+
+
+                
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/springBoot/">springBoot</a>
+    </div>
+
+            </div>
+            
+        </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+            
+            <p>继续接上篇—–，这篇开始来搭建springboot方式的ssmm框架</p>
+<p>思路</p>
+<pre><code>- 创建一个maven项目
+- 配置pom.xml
+- 创建application.properties文件
+- 配置mybatis，事物，数据库等信息
+- 配置springmvc
+- 创建启动类
+- 创建测试类
+- 开始测试
+</code></pre><p>1.创建一个maven项目</p>
+<a id="more"></a>
+<p>2.配置pom.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.study<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>boot-study-ssmm-boot<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- springboot 父类，版本控制--&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">parent</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.0.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.7<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">mybatis.version</span>&gt;</span>3.3.1<span class="tag">&lt;/<span class="name">mybatis.version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">mybatis.spring.version</span>&gt;</span>1.2.4<span class="tag">&lt;/<span class="name">mybatis.spring.version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">mapper.version</span>&gt;</span>3.3.6<span class="tag">&lt;/<span class="name">mapper.version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">pagehelper.version</span>&gt;</span>4.1.1<span class="tag">&lt;/<span class="name">pagehelper.version</span>&gt;</span></div><div class="line"></div><div class="line">  <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">  		<span class="comment">&lt;!--对全栈web开发的支持，包括Tomcat和 spring-webmvc  --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">       <span class="comment">&lt;!-- 对面向切面编程的支持，包括 spring-aop  和AspectJ --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">       <span class="comment">&lt;!-- 对常用测试依赖的支持，包括JUnit, Hamcrest和Mockito，还有 spring-test  模块 --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="comment">&lt;!-- 对JDBC数据库的支持 自然也包括事务 --&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="comment">&lt;!-- 数据库连接 --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="comment">&lt;!-- json --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.datatype<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-datatype-joda<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.module<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-module-parameter-names<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="comment">&lt;!-- 连接池 --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.11<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="comment">&lt;!--Mybatis--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;mybatis.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;mybatis.spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!--分页插件--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.pagehelper<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>pagehelper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;pagehelper.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!--通用Mapper--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>tk.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mapper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;mapper.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="comment">&lt;!--spring-boot-configuration:spring boot 配置处理器; --&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-configuration-processor<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">       <span class="comment">&lt;!-- tomcat配置 --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.embed<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat-embed-jasper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jstl<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">		 <span class="comment">&lt;!-- servlet 依赖. --&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">        	<span class="comment">&lt;!-- 可执行jar --&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"></div><div class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>3.创建application.properties<br>    在src/main/resources/下创建application.properties</p>
+<p>4.配置数据库<br>    (1). 配置数据库<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">####################################################</div><div class="line">#### jdbc</div><div class="line">####################################################</div><div class="line">spring.datasource.url = jdbc:mysql://localhost:3306/test</div><div class="line">spring.datasource.username = root</div><div class="line">spring.datasource.password =</div><div class="line">spring.datasource.driverClassName = com.mysql.jdbc.Driver</div></pre></td></tr></table></figure></p>
+<p>（2）配置mybatis</p>
+<ul>
+<li><p>配置扫描类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.study.springboot.config;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.AutoConfigureAfter;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</div><div class="line"></div><div class="line"><span class="keyword">import</span> tk.mybatis.spring.mapper.MapperScannerConfigurer;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * mybatis 扫描类配置</div><div class="line"> * <span class="doctag">@author</span> like</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="comment">//注意，由于MapperScannerConfigurer执行的比较早，所以必须有下面的注解</span></div><div class="line"><span class="meta">@AutoConfigureAfter</span>(MybatisConf.class)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBatisMapperScannerConfig</span> </span>&#123;</div><div class="line">		<span class="meta">@Bean</span></div><div class="line">	    <span class="function"><span class="keyword">public</span> MapperScannerConfigurer <span class="title">mapperScannerConfigurer</span><span class="params">()</span> </span>&#123;</div><div class="line">	        MapperScannerConfigurer mapperScannerConfigurer = <span class="keyword">new</span> MapperScannerConfigurer();</div><div class="line">	        mapperScannerConfigurer.setSqlSessionFactoryBeanName(<span class="string">"sqlSessionFactory"</span>);</div><div class="line">	        mapperScannerConfigurer.setBasePackage(<span class="string">"com.study.springboot.mapper"</span>);</div><div class="line">	        <span class="keyword">return</span> mapperScannerConfigurer;</div><div class="line">	    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置jdbc,mybatis存放路径和别名</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.study.springboot.config;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * JDBC 基本配置</div><div class="line"> * <span class="doctag">@author</span> like</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="meta">@ConfigurationProperties</span>(prefix=<span class="string">"spring.datasource"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JdbcConfig</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> String url;</div><div class="line">	<span class="keyword">private</span> String userName;</div><div class="line">	<span class="keyword">private</span> String password;</div><div class="line">	<span class="keyword">private</span> String driverClassName;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getUrl</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> url;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUrl</span><span class="params">(String url)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.url = url;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getUserName</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> userName;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserName</span><span class="params">(String userName)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.userName = userName;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getPassword</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> password;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPassword</span><span class="params">(String password)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.password = password;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getDriverClassName</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> driverClassName;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDriverClassName</span><span class="params">(String driverClassName)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.driverClassName = driverClassName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">package</span> com.study.springboot.config;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * mapper 基本配置</div><div class="line"> * <span class="doctag">@author</span> like</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="meta">@ConfigurationProperties</span>(prefix=<span class="string">"mybatis.prop"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MybatisProp</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> String mapperLocations;<span class="comment">//mapper存放路径</span></div><div class="line">	<span class="keyword">private</span> String typeAliasesPackage; <span class="comment">//别名包</span></div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getMapperLocations</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> mapperLocations;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMapperLocations</span><span class="params">(String mapperLocations)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.mapperLocations = mapperLocations;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getTypeAliasesPackage</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> typeAliasesPackage;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTypeAliasesPackage</span><span class="params">(String typeAliasesPackage)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.typeAliasesPackage = typeAliasesPackage;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>mybatis基本配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">package</span> com.study.springboot.config;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.ibatis.plugin.Interceptor;</div><div class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSessionFactory;</div><div class="line"><span class="keyword">import</span> org.mybatis.spring.SqlSessionFactoryBean;</div><div class="line"><span class="keyword">import</span> org.mybatis.spring.SqlSessionTemplate;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</div><div class="line"><span class="keyword">import</span> org.springframework.core.io.support.PathMatchingResourcePatternResolver;</div><div class="line"><span class="keyword">import</span> org.springframework.core.io.support.ResourcePatternResolver;</div><div class="line"><span class="keyword">import</span> org.springframework.jdbc.datasource.DataSourceTransactionManager;</div><div class="line"><span class="keyword">import</span> org.springframework.transaction.PlatformTransactionManager;</div><div class="line"><span class="keyword">import</span> org.springframework.transaction.annotation.EnableTransactionManagement;</div><div class="line"><span class="keyword">import</span> org.springframework.transaction.annotation.TransactionManagementConfigurer;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.alibaba.druid.pool.DruidDataSource;</div><div class="line"><span class="keyword">import</span> com.github.pagehelper.PageHelper;</div><div class="line"></div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableTransactionManagement</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MybatisConf</span> <span class="keyword">implements</span> <span class="title">TransactionManagementConfigurer</span></span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> JdbcConfig jdbcConfig;</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> MybatisProp prop;</div><div class="line"></div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 配置 dataSource</div><div class="line">	 	相当于 xml</div><div class="line">	&lt;bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"&gt;</div><div class="line">    	&lt;property name="driverClass" value="$&#123;driverClass&#125;"/&gt;</div><div class="line">		&lt;property name="jdbcUrl" value="$&#123;jdbcUrl&#125;"&gt;&lt;/property&gt;</div><div class="line">		&lt;property name="user" value="$&#123;user&#125;" /&gt;</div><div class="line">		&lt;property name="password" value="$&#123;password&#125;"/&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line"></div><div class="line">	 * <span class="doctag">@return</span></div><div class="line">	 */</div><div class="line">	<span class="meta">@Bean</span>(name=<span class="string">"dataSource"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> DruidDataSource <span class="title">createDataSource</span><span class="params">()</span></span>&#123;</div><div class="line">		DruidDataSource druidDataSource = <span class="keyword">new</span> DruidDataSource();</div><div class="line">		druidDataSource.setUrl(jdbcConfig.getUrl());</div><div class="line">		druidDataSource.setDriverClassName(jdbcConfig.getDriverClassName());</div><div class="line">		druidDataSource.setUsername(jdbcConfig.getUserName());</div><div class="line">		druidDataSource.setPassword(jdbcConfig.getPassword());</div><div class="line">		<span class="keyword">return</span> druidDataSource;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * xml配置</div><div class="line">	 &lt;bean	class="org.mybatis.spring.SqlSessionFactoryBean"&gt;</div><div class="line">  		&lt;property name="dataSource" ref="dataSource" /&gt;</div><div class="line">		&lt;property name="typeAliasesPackage" value="com.study.bean"/&gt;</div><div class="line">  	&lt;/bean&gt;</div><div class="line">	 * <span class="doctag">@return</span></div><div class="line">	 */</div><div class="line">	<span class="meta">@Bean</span>(name = <span class="string">"sqlSessionFactory"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">sqlSessionFactoryBean</span><span class="params">()</span></span>&#123;</div><div class="line">		SqlSessionFactoryBean bean = <span class="keyword">new</span> SqlSessionFactoryBean();</div><div class="line">		bean.setDataSource(createDataSource());</div><div class="line">		<span class="comment">//别名包</span></div><div class="line">        bean.setTypeAliasesPackage(prop.getTypeAliasesPackage());</div><div class="line">        <span class="comment">//分页插件</span></div><div class="line">        PageHelper pageHelper = <span class="keyword">new</span> PageHelper();</div><div class="line">        Properties properties = <span class="keyword">new</span> Properties();</div><div class="line">        properties.setProperty(<span class="string">"reasonable"</span>, <span class="string">"true"</span>);</div><div class="line">        properties.setProperty(<span class="string">"supportMethodsArguments"</span>, <span class="string">"true"</span>);</div><div class="line">        properties.setProperty(<span class="string">"returnPageInfo"</span>, <span class="string">"check"</span>);</div><div class="line">        properties.setProperty(<span class="string">"params"</span>, <span class="string">"count=countSql"</span>);</div><div class="line">        pageHelper.setProperties(properties);</div><div class="line"></div><div class="line">        <span class="comment">//添加插件</span></div><div class="line">        bean.setPlugins(<span class="keyword">new</span> Interceptor[]&#123;pageHelper&#125;);</div><div class="line">        <span class="comment">//添加XML目录</span></div><div class="line">        ResourcePatternResolver resolver = <span class="keyword">new</span> PathMatchingResourcePatternResolver();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">        	<span class="comment">//设置mapper 目录，这些都可以配置到配置文件中，直接注入进来接可以了</span></div><div class="line">            bean.setMapperLocations(resolver.getResources(prop.getMapperLocations()));</div><div class="line">            <span class="keyword">return</span> bean.getObject();</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">	&#125;;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 整合 spring +mybaits</div><div class="line">	 * <span class="doctag">@param</span> sqlSessionFactory</div><div class="line">	 * <span class="doctag">@return</span></div><div class="line">	 */</div><div class="line">	<span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> SqlSessionTemplate <span class="title">sqlSessionTemplate</span><span class="params">(SqlSessionFactory sqlSessionFactory)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SqlSessionTemplate(sqlSessionFactory);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">	<span class="comment">/*</span></div><div class="line">	 * 配置注解事物</div><div class="line">	 * 相当于xml</div><div class="line">	 &lt;!-- spring 事务 --&gt;</div><div class="line">	&lt;bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"&gt;</div><div class="line">		&lt;property name="dataSource" ref="dataSource"/&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line">	&lt;!-- 开启注解事务--&gt;</div><div class="line">	&lt;tx:annotation-driven transaction-manager="transactionManager"/&gt;</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> PlatformTransactionManager <span class="title">annotationDrivenTransactionManager</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> DataSourceTransactionManager(createDataSource());</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>springmvc 配置，配置jsp存放路径</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">server.port=8001</div><div class="line">####################################################</div><div class="line">#### jdbc</div><div class="line">####################################################</div><div class="line">spring.datasource.url = jdbc:mysql://localhost:3306/test</div><div class="line">spring.datasource.username = root</div><div class="line">spring.datasource.password =</div><div class="line">spring.datasource.driverClassName = com.mysql.jdbc.Driver</div><div class="line"></div><div class="line">####################################################</div><div class="line">#### mybatis</div><div class="line">####################################################</div><div class="line">mybatis.prop.mapperLocations=classpath:mapper/*.xml</div><div class="line">mybatis.prop.typeAliasesPackage=com.study.springboot.bean</div><div class="line"></div><div class="line"></div><div class="line">####################################################</div><div class="line">#### jsp</div><div class="line">####################################################</div><div class="line">spring.mvc.view.prefix=/WEB-INF/view/</div><div class="line">spring.mvc.view.suffix=.jsp</div></pre></td></tr></table></figure>
+</li>
+<li><p>springmvc 配置时间转化器，字符拦截器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">package</span> com.study.springboot.config;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.text.ParseException;</div><div class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</div><div class="line"><span class="keyword">import</span> java.util.Date;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.core.convert.converter.Converter;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 字符串转Date</div><div class="line"> * <span class="doctag">@author</span> like</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringToDateConverter</span> <span class="keyword">implements</span> <span class="title">Converter</span>&lt;<span class="title">String</span>, <span class="title">Date</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> Date <span class="title">convert</span><span class="params">(String source)</span> </span>&#123;</div><div class="line">		 SimpleDateFormat dateFormat = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyyMMdd"</span>);</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">return</span>   dateFormat.parse(source);</div><div class="line">		&#125; <span class="keyword">catch</span> (ParseException e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">package</span> com.study.springboot.config;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.nio.charset.Charset;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.annotation.PostConstruct;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</div><div class="line"><span class="keyword">import</span> org.springframework.core.convert.support.GenericConversionService;</div><div class="line"><span class="keyword">import</span> org.springframework.http.converter.HttpMessageConverter;</div><div class="line"><span class="keyword">import</span> org.springframework.http.converter.StringHttpMessageConverter;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.support.ConfigurableWebBindingInitializer;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Spring mvc 配置</div><div class="line"> * <span class="doctag">@author</span> like</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringMVCConfig</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span></span>&#123;</div><div class="line">	<span class="comment">/* 解决转码问题Spring @responseBody 问题</span></div><div class="line">	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#configureMessageConverters(java.util.List)</div><div class="line">	 */</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configureMessageConverters</span><span class="params">(List&lt;HttpMessageConverter&lt;?&gt;&gt; converters)</span> </span>&#123;</div><div class="line">		converters.add(getConverter());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> StringHttpMessageConverter <span class="title">getConverter</span><span class="params">()</span></span>&#123;</div><div class="line">		StringHttpMessageConverter converter = <span class="keyword">new</span> StringHttpMessageConverter();</div><div class="line">		converter.setDefaultCharset(Charset.forName(<span class="string">"UTF-8"</span>));</div><div class="line">		<span class="keyword">return</span>  converter;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 局部时间配置</span></div><div class="line"><span class="comment">//	@InitBinder("date")</span></div><div class="line"><span class="comment">//	public void initBinder(WebDataBinder binder)&#123;</span></div><div class="line"><span class="comment">//		binder.registerCustomEditor(Date.class,new CustomDateEditor(new SimpleDateFormat("yyyyMMdd"), true, 8));</span></div><div class="line"><span class="comment">//	&#125;</span></div><div class="line"></div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> RequestMappingHandlerAdapter handlerAdapter;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 增加字符串转日期的功能</div><div class="line">     */</div><div class="line">    <span class="meta">@PostConstruct</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initEditableValidation</span><span class="params">()</span> </span>&#123;</div><div class="line">        ConfigurableWebBindingInitializer initializer = (ConfigurableWebBindingInitializer) handlerAdapter</div><div class="line">            .getWebBindingInitializer();</div><div class="line">        <span class="keyword">if</span> (initializer.getConversionService() != <span class="keyword">null</span>) &#123;</div><div class="line">            GenericConversionService genericConversionService = (GenericConversionService) initializer</div><div class="line">                .getConversionService();</div><div class="line">            genericConversionService.addConverter(<span class="keyword">new</span> StringToDateConverter());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>(3) 创建启动类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.study.springboot;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line"></div><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BootApp</span>  </span>&#123;</div><div class="line"></div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">		SpringApplication.run(BootApp.class, args);</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>(4)创建 测试基础类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">package</span> com.study.springboot.bean;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.persistence.Column;</div><div class="line"><span class="keyword">import</span> javax.persistence.GeneratedValue;</div><div class="line"><span class="keyword">import</span> javax.persistence.GenerationType;</div><div class="line"><span class="keyword">import</span> javax.persistence.Id;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</div><div class="line">	 <span class="meta">@Id</span></div><div class="line">	 <span class="meta">@Column</span>(name = <span class="string">"Id"</span>)</div><div class="line">	 <span class="meta">@GeneratedValue</span>(strategy = GenerationType.IDENTITY)</div><div class="line">	<span class="keyword">private</span> Integer id;</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="keyword">private</span> String email;</div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> id;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.id = id;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getEmail</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> email;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEmail</span><span class="params">(String email)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.email = email;</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"User [id="</span> + id + <span class="string">", name="</span> + name + <span class="string">", email="</span> + email + <span class="string">"]"</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">package</span> com.study.springboot.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.study.springboot.bean.User;</div><div class="line"><span class="keyword">import</span> com.study.springboot.mapper.UserMapper;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> </span>&#123;</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> UserMapper userMapper;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> User <span class="title">find</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line"></div><div class="line">		<span class="keyword">return</span> userMapper.selectByPrimaryKey(id);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">package</span> com.study.springboot.mapper;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.study.springboot.bean.User;</div><div class="line"></div><div class="line"><span class="keyword">import</span> tk.mybatis.mapper.common.Mapper;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">User</span>&gt;</span>&#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">package</span> com.study.springboot.controller;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.study.springboot.bean.User;</div><div class="line"><span class="keyword">import</span> com.study.springboot.service.UserServiceImpl;</div><div class="line"></div><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> UserServiceImpl userServiceImpl;</div><div class="line"></div><div class="line">	<span class="meta">@RequestMapping</span>(value=<span class="string">"/user"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">testMybaits</span><span class="params">(Integer id)</span></span>&#123;</div><div class="line">		User user = userServiceImpl.find(id);</div><div class="line">		<span class="keyword">return</span> user.toString();</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">	<span class="meta">@RequestMapping</span>(value=<span class="string">"/unicode"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">unicode</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">		<span class="keyword">return</span> <span class="string">"成功"</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">package</span> com.study.springboot.controller;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Date;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</div><div class="line"></div><div class="line"><span class="meta">@Controller</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CoreController</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@RequestMapping</span>(value=<span class="string">"welcome"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toWelcome</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">		<span class="keyword">return</span> <span class="string">"welcome"</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">	<span class="meta">@RequestMapping</span>(value=<span class="string">"todate"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">todate</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">		<span class="keyword">return</span> <span class="string">"date"</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@RequestMapping</span>(value=<span class="string">"date"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">date</span><span class="params">(Date date)</span></span>&#123;</div><div class="line">			System.out.println(date);</div><div class="line">		<span class="keyword">return</span> <span class="string">"date"</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>创建mapper<br>在 src/main/resources 下创建mapper 目录<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE mapper</span></div><div class="line">    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"</div><div class="line">    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</div><div class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"com.study.springboot.mapper.UserMapper"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>(5)创建 测试页面<br>在 src/main/webapp/WEB-INF/view/</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"</div><div class="line">    pageEncoding="UTF-8"%&gt;</div><div class="line">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;</div><div class="line">&lt;title&gt;Insert title here&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">	&lt;form action="/date" method="post"&gt;</div><div class="line">		时间 ：&lt;input type="text" name="date"/&gt;&lt;br/&gt;</div><div class="line">			&lt;input type="submit" value="提交"/&gt;</div><div class="line">	&lt;/form&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"</div><div class="line">    pageEncoding="UTF-8"%&gt;</div><div class="line">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;</div><div class="line">&lt;title&gt;Insert title here&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">	welcome!</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>（6）开始测试<br>    直接运行 BootApp main方法</p>
+<p>启动成功 ，可以看见一下内容：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  .   ____          _            __ _ _</div><div class="line"> /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \</div><div class="line">( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \</div><div class="line"> \\/  ___)| |_)| | | | | || (_| |  ) ) ) )</div><div class="line">  '  |____| .__|_| |_|_| |_\__, | / / / /</div><div class="line"> =========|_|==============|___/=/_/_/_/</div><div class="line"> :: Spring Boot ::        (v1.4.0.RELEASE)</div><div class="line"></div><div class="line">2016-09-22 14:47:23.610  INFO 6088 --- [           main] com.study.springboot.BootApp             : Starting BootApp on USER-20150824CO with PID 6088 (J:\eclipse-javaee\work\boot\boot-study-ssmm-boot\target\classes started by Administrator in J:\eclipse-javaee\work\boot\boot-study-ssmm-boot)</div><div class="line">2016-09-22 14:47:23.617  INFO 6088 --- [           main] com.study.springboot.BootApp             : No active profile set, falling back to default profiles: default</div><div class="line">2016-09-22 14:47:23.703  INFO 6088 --- [           main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@11dbed: startup date [Thu Sep 22 14:47:23 CST 2016]; root of context hierarchy</div><div class="line">2016-09-22 14:47:24.962  WARN 6088 --- [           main] o.s.c.a.ConfigurationClassPostProcessor  : Cannot enhance @Configuration bean definition 'myBatisMapperScannerConfig' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.</div><div class="line">2016-09-22 14:47:25.589  INFO 6088 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'jdbcConfig' of type [class com.study.springboot.config.JdbcConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)</div><div class="line">2016-09-22 14:47:25.601  INFO 6088 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'mybatisProp' of type [class com.study.springboot.config.MybatisProp] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)</div><div class="line">2016-09-22 14:47:25.602  INFO 6088 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'mybatisConf' of type [class com.study.springboot.config.MybatisConf$$EnhancerBySpringCGLIB$$2212bb2e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)</div><div class="line">2016-09-22 14:47:25.744  INFO 6088 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'dataSource' of type [class com.alibaba.druid.pool.DruidDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)</div><div class="line">2016-09-22 14:47:25.751  INFO 6088 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration' of type [class org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$f53b36e1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)</div><div class="line">2016-09-22 14:47:25.826  INFO 6088 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [class org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)</div><div class="line">2016-09-22 14:47:25.831  INFO 6088 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'dataSourceInitializer' of type [class org.springframework.boot.autoconfigure.jdbc.DataSourceInitializer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)</div><div class="line">2016-09-22 14:47:25.833  INFO 6088 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [class org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$13479381] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)</div><div class="line">2016-09-22 14:47:26.502  INFO 6088 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8001 (http)</div><div class="line">2016-09-22 14:47:26.519  INFO 6088 --- [           main] o.apache.catalina.core.StandardService   : Starting service Tomcat</div><div class="line">2016-09-22 14:47:26.520  INFO 6088 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.4</div><div class="line">2016-09-22 14:47:27.056  INFO 6088 --- [ost-startStop-1] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.</div><div class="line">2016-09-22 14:47:27.063  INFO 6088 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext</div><div class="line">2016-09-22 14:47:27.063  INFO 6088 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3363 ms</div><div class="line">2016-09-22 14:47:27.355  INFO 6088 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]</div><div class="line">2016-09-22 14:47:27.362  INFO 6088 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]</div><div class="line">2016-09-22 14:47:27.363  INFO 6088 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]</div><div class="line">2016-09-22 14:47:27.363  INFO 6088 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]</div><div class="line">2016-09-22 14:47:27.363  INFO 6088 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]</div><div class="line">2016-09-22 14:47:27.873  INFO 6088 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@11dbed: startup date [Thu Sep 22 14:47:23 CST 2016]; root of context hierarchy</div><div class="line">2016-09-22 14:47:28.551  INFO 6088 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "&#123;[/date]&#125;" onto public java.lang.String com.study.springboot.controller.CoreController.date(java.util.Date)</div><div class="line">2016-09-22 14:47:28.554  INFO 6088 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "&#123;[/welcome]&#125;" onto public java.lang.String com.study.springboot.controller.CoreController.toWelcome()</div><div class="line">2016-09-22 14:47:28.555  INFO 6088 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "&#123;[/todate]&#125;" onto public java.lang.String com.study.springboot.controller.CoreController.todate()</div><div class="line">2016-09-22 14:47:28.555  INFO 6088 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "&#123;[/unicode]&#125;" onto public java.lang.String com.study.springboot.controller.TestController.unicode()</div><div class="line">2016-09-22 14:47:28.556  INFO 6088 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "&#123;[/user]&#125;" onto public java.lang.String com.study.springboot.controller.TestController.testMybaits(java.lang.Integer)</div><div class="line">2016-09-22 14:47:28.560  INFO 6088 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "&#123;[/error]&#125;" onto public org.springframework.http.ResponseEntity&lt;java.util.Map&lt;java.lang.String, java.lang.Object&gt;&gt; org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)</div><div class="line">2016-09-22 14:47:28.561  INFO 6088 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "&#123;[/error],produces=[text/html]&#125;" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)</div><div class="line">2016-09-22 14:47:28.632  INFO 6088 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</div><div class="line">2016-09-22 14:47:28.632  INFO 6088 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</div><div class="line">2016-09-22 14:47:28.731  INFO 6088 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</div><div class="line">2016-09-22 14:47:29.325  INFO 6088 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup</div><div class="line">2016-09-22 14:47:29.326  INFO 6088 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Bean with name 'dataSource' has been autodetected for JMX exposure</div><div class="line">2016-09-22 14:47:29.335  INFO 6088 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Located MBean 'dataSource': registering with JMX server as MBean [com.alibaba.druid.pool:name=dataSource,type=DruidDataSource]</div><div class="line">2016-09-22 14:47:29.567  INFO 6088 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8001 (http)</div><div class="line">2016-09-22 14:47:29.574  INFO 6088 --- [           main] com.study.springboot.BootApp             : Started BootApp in 6.672 seconds (JVM running for 7.159)</div></pre></td></tr></table></figure></p>
+<ul>
+<li>访问 <a href="http://localhost:8001/unicode" target="_blank" rel="external">http://localhost:8001/unicode</a></li>
+<li><p>返回成功，表示字符测试成功</p>
+</li>
+<li><p>访问 <a href="http://localhost:8001/user?id=1，这里注意下数据库SQL自己准备哈" target="_blank" rel="external">http://localhost:8001/user?id=1，这里注意下数据库SQL自己准备哈</a></p>
+</li>
+<li><p>下面是我的SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`user`</span> (</div><div class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`email`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</div><div class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> AUTO_INCREMENT=<span class="number">2</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=latin1;</div></pre></td></tr></table></figure>
+</li>
+<li><p>返回User [id=1, name=test, email=123456]</p>
+</li>
+<li>表示搭建成功</li>
+</ul>
+<p>继续访问：<a href="http://localhost:8001/todate" target="_blank" rel="external">http://localhost:8001/todate</a><br>后台打印出你输出的时间，转的的date,表示成功</p>
+<p>如： 2016-08-08 –&gt;Sun Dec 08 00:00:00 CST 15<br>成功</p>
+<p>到此，次springboot框架搭建就完成了</p>
+<p>欢迎转载，但转载请注明来自 www.likeoak.com，并保持转载后文章内容的完整。本人保留所有版权相关权利</p>
+<p>本文链接：<a href="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架03/">http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架03/</a></p>
+
+            
+        </div>
+
+
+        
+
+        
+        <!-- css -->
+        <style type="text/css">
+            .center {
+                text-align: center;
+            }
+            .hidden {
+                display: none;
+            }
+            .donate_bar a.btn_donate{
+                display: inline-block;
+                width: 82px;
+                height: 82px;
+                background: url("http://7xsl28.com1.z0.glb.clouddn.com/btn_reward.gif") no-repeat;
+                _background: url("http://7xsl28.com1.z0.glb.clouddn.com/btn_reward.gif") no-repeat;
+
+            <!-- http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif
+            因为本 hexo 生成的博客所用的 theme 的 a:hover 带动画效果，
+            为了在让打赏按钮显示效果正常 而 添加了以下几行 css，
+            嵌入其它博客时不一定要它们。 -->
+                -webkit-transition: background 0s;
+                -moz-transition: background 0s;
+                -o-transition: background 0s;
+                -ms-transition: background 0s;
+                transition: background 0s;
+            <!-- /让打赏按钮的效果显示正常 而 添加的几行 css 到此结束 -->
+            }
+
+            .donate_bar a.btn_donate:hover{ background-position: 0px -82px;}
+            .donate_bar .donate_txt {
+                display: block;
+                color: #9d9d9d;
+                font: 14px/2 "Microsoft Yahei";
+            }
+            .bold{ font-weight: bold; }
+        </style>
+        <!-- /css -->
+
+        <!-- Donate Module -->
+        <div id="donate_module">
+
+            <!-- btn_donate & tips -->
+            <div id="donate_board" class="donate_bar center">
+                <br>
+                ------------------------------------------------------------------------------------------------------------------------------
+                <br>
+                <a id="btn_donate" class="btn_donate" target="_self" href="javascript:;" title="Donate 打赏"></a>
+    <span class="donate_txt">
+      Enjoy it ? Donate me !  欣赏此文？求鼓励，求支持！
+    </span>
+
+
+            </div>
+            <!-- /btn_donate & tips -->
+
+            <!-- donate guide -->
+
+            <div id="donate_guide" class="donate_bar center hidden">
+                <br>
+                ------------------------------------------------------------------------------------------------------------------------------
+                <br>
+
+                <a href="http://os1nquf60.bkt.clouddn.com/weixin.png" title="用微信扫一扫哦~" class="fancybox" rel="article0">
+                    <img src="http://os1nquf60.bkt.clouddn.com/weixin.png" title="微信打赏 like" height="190px" width="auto"/>
+                </a>
+
+
+
+                <a href="http://os1nquf60.bkt.clouddn.com/aipay.png" title="用支付宝扫一扫即可~" class="fancybox" rel="article0">
+                    <img src="http://os1nquf60.bkt.clouddn.com/aipay.png" title="支付宝打赏 like" height="190px" width="auto"/>
+                </a>
+
+    <span class="donate_txt">
+      Enjoy it ? Donate me !  欣赏此文？求鼓励，求支持！
+    </span>
+
+            </div>
+            <!-- /donate guide -->
+
+            <!-- donate script -->
+            <script type="text/javascript">
+                document.getElementById('btn_donate').onclick = function() {
+                    $('#donate_board').addClass('hidden');
+                    $('#donate_guide').removeClass('hidden');
+                }
+
+                function donate_on_web(){
+                    $('#donate').submit();
+                }
+
+                var original_window_onload = window.onload;
+                window.onload = function () {
+                    if (original_window_onload) {
+                        original_window_onload();
+                    }
+                    document.getElementById('donate_board_wdg').className = 'hidden';
+                }
+            </script>
+            <!-- /donate script -->
+        </div>
+        <!-- /Donate Module -->
+        
+
+
+        
+
+
+
+
+
+
+
+
+        <footer class="article-footer">
+            <div class="share-container">
+
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+</div>
+
+          <!--  
+    
+        <a href="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架03/#comments" class="article-comment-link ds-thread-count" data-thread-key="http://yoursite.com/2017/06/24/spring-boot-学习-搭建ssmm框架03/">评论</a>
+    
+-->
+        </footer>
+    </div>
+    
+    
+<nav id="article-nav">
+    
+        <a href="/2017/06/24/spring-boot-学习-搭建ssmm框架01/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    spring boot 学习--搭建ssmm框架01
+                
+            </div>
+        </a>
+    
+    
+</nav>
+
+
+    
+</article>
+
+
+
+    
+        <section id="comments"><div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href,
+    sourceId: "",
+    productKey: "11f97202006a4688905963e8c3a9f5ce",
+    target: "cloud-tie-wrapper"
+  };
+  var yunManualLoad = true;
+  Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+</script>
+</section>
+    
+
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/24/spring-boot-学习-搭建ssmm框架02/" class="title">spring boot 学习--搭建ssmm框架02</a></p>
+                            <p class="item-date"><time datetime="2017-06-24T10:26:06.000Z" itemprop="datePublished">2017-06-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/24/spring-boot-学习-搭建ssmm框架01/" class="title">spring boot 学习--搭建ssmm框架01</a></p>
+                            <p class="item-date"><time datetime="2017-06-24T10:21:06.000Z" itemprop="datePublished">2017-06-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/24/spring-boot-学习-搭建ssmm框架03/" class="title">spring boot 学习--搭建ssmm框架03</a></p>
+                            <p class="item-date"><time datetime="2017-06-24T09:36:06.000Z" itemprop="datePublished">2017-06-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/springBoot/">springBoot</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/springBoot/" style="font-size: 10px;">springBoot</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+               <!-- 
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                -->
+
+                <li>
+                    <a href="http://blog.csdn.net/javastudyr">csdn博客连接</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 like<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        <!--
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href,
+    sourceId: "",
+    productKey: "11f97202006a4688905963e8c3a9f5ce",
+    target: "cloud-tie-wrapper"
+  };
+  var yunManualLoad = true;
+  Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+</script>
+
+
+-->
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
