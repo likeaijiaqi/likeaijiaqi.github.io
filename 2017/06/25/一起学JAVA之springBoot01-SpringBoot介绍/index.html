@@ -3,18 +3,19 @@
 <head>
     <meta charset="utf-8">
     
-    <title>java程序猿</title>
+    <title>一起学JAVA之《spring boot》01-spring boot介绍 | java程序猿</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="李科         一个平凡的程序猿，却有不平凡的想法。        生于1991年，现居住在成都，毕业于电子科技大学成都学院（一个三本大学，不是本部哦，/(ㄒoㄒ)/~~，不要鄙视我。。。）。本人一直就业在金融行业，现就业与佰仟金融。        目前，主要对 spingboot ,spingCloud ,区块链等概念比较感兴趣，希望大家可以一起交流。  欢迎转载，但转载请注明来自 www">
-<meta property="og:type" content="website">
-<meta property="og:title" content="java程序猿">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+    <meta name="description" content="一、导航本节内容简介: 1. 什么是spring boot 2. spring boot的优点 3. spring boot系统要求和本系列所用版本">
+<meta name="keywords" content="springBoot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一起学JAVA之《spring boot》01-spring boot介绍">
+<meta property="og:url" content="http://yoursite.com/2017/06/25/一起学JAVA之springBoot01-SpringBoot介绍/index.html">
 <meta property="og:site_name" content="java程序猿">
-<meta property="og:description" content="李科         一个平凡的程序猿，却有不平凡的想法。        生于1991年，现居住在成都，毕业于电子科技大学成都学院（一个三本大学，不是本部哦，/(ㄒoㄒ)/~~，不要鄙视我。。。）。本人一直就业在金融行业，现就业与佰仟金融。        目前，主要对 spingboot ,spingCloud ,区块链等概念比较感兴趣，希望大家可以一起交流。  欢迎转载，但转载请注明来自 www">
-<meta property="og:updated_time" content="2017-06-24T10:15:09.208Z">
+<meta property="og:description" content="一、导航本节内容简介: 1. 什么是spring boot 2. spring boot的优点 3. spring boot系统要求和本系列所用版本">
+<meta property="og:updated_time" content="2017-06-25T09:48:19.146Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java程序猿">
-<meta name="twitter:description" content="李科         一个平凡的程序猿，却有不平凡的想法。        生于1991年，现居住在成都，毕业于电子科技大学成都学院（一个三本大学，不是本部哦，/(ㄒoㄒ)/~~，不要鄙视我。。。）。本人一直就业在金融行业，现就业与佰仟金融。        目前，主要对 spingboot ,spingCloud ,区块链等概念比较感兴趣，希望大家可以一起交流。  欢迎转载，但转载请注明来自 www">
+<meta name="twitter:title" content="一起学JAVA之《spring boot》01-spring boot介绍">
+<meta name="twitter:description" content="一、导航本节内容简介: 1. 什么是spring boot 2. spring boot的优点 3. spring boot系统要求和本系列所用版本">
     
 
     
@@ -168,19 +169,97 @@
 </aside>
 
             
-            <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-一起学JAVA之springBoot01-SpringBoot介绍" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
+        
+        <header class="article-header">
+            
+    
+        <h1 class="article-title" itemprop="name">
+            一起学JAVA之《spring boot》01-spring boot介绍
+        </h1>
+    
+
+            
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/06/25/一起学JAVA之springBoot01-SpringBoot介绍/">
+            <time datetime="2017-06-25T08:55:00.000Z" itemprop="datePublished">2017-06-25</time>
+        </a>
+    </div>
+
+
+                
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/springBoot/">springBoot</a>
+    </div>
+
+            </div>
+            
+        </header>
         
         
         <div class="article-entry" itemprop="articleBody">
             
             
-            <p></p><h2>李科</h2><p></p>
-<div><br>        一个平凡的程序猿，却有不平凡的想法。<br>        生于1991年，现居住在成都，毕业于电子科技大学成都学院（一个三本大学，不是本部哦，/(ㄒoㄒ)/~~，不要鄙视我。。。）。本人一直就业在金融行业，现就业与佰仟金融。<br>        目前，主要对 spingboot ,spingCloud ,区块链等概念比较感兴趣，希望大家可以一起交流。<br></div>
-
+            <h3 id="一、导航"><a href="#一、导航" class="headerlink" title="一、导航"></a>一、导航</h3><p>本节内容简介:</p>
+<pre><code>1. 什么是spring boot
+2. spring boot的优点
+3. spring boot系统要求和本系列所用版本
+</code></pre><a id="more"></a>
+<h3 id="二、什么是spring-boot"><a href="#二、什么是spring-boot" class="headerlink" title="二、什么是spring boot"></a>二、什么是spring boot</h3><p>一直以来都不知道怎么解释什么是spring boot框架，今天引用百度百科和官方话来解释下。</p>
+<p>百度百科</p>
+<blockquote>
+<p>Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域（rapid application development）成为领导者。</p>
+</blockquote>
+<p>官方解释</p>
+<blockquote>
+<p>spring Boot可以基于Spring轻松创建可以“运行”的、独立的、生产级的应用程序</p>
+</blockquote>
+<h3 id="三、spring-boot的优点"><a href="#三、spring-boot的优点" class="headerlink" title="三、spring boot的优点"></a>三、spring boot的优点</h3><p>简单来说就是这几个特点</p>
+<ol>
+<li>快速构建项目</li>
+<li>对主流框架可以无配置集成</li>
+<li>项目可独立运行，无需依赖外部Servlet容器（如:tomcat）</li>
+<li>可以提供运行时的应用监控（如指标，健康检查）</li>
+<li>与springCloud天然集成</li>
+<li>与云计算（Docker等）天然集成</li>
+<li>无强依赖，没有代码生成和XML配置要求</li>
+<li>提供starter来极大减少maven配置</li>
+<li>自动配置</li>
+</ol>
+<h3 id="四、-spring-boot系统要求和本系列博客所用版本"><a href="#四、-spring-boot系统要求和本系列博客所用版本" class="headerlink" title="四、 spring boot系统要求和本系列博客所用版本"></a>四、 spring boot系统要求和本系列博客所用版本</h3><p>默认情况下，本系列博客使用Spring Boot 1.5.2.RELEASE<br><strong>环境要求</strong><br>需要Java 7和Spring Framework 4.3.7.RELEASE或更高版本<br>需要Maven 3.2及以上<br>需要Servlet容器</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:right">Servlet版本</th>
+<th style="text-align:center">JAVA版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Tomcat 8</td>
+<td style="text-align:right">3.1</td>
+<td style="text-align:center">Java 7+</td>
+</tr>
+<tr>
+<td style="text-align:left">Jetty 9.3</td>
+<td style="text-align:right">3.1</td>
+<td style="text-align:center">Java 7+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>后续会继续推出这一系列spring boot的文章</p>
+<p>本人网站：<a href="http://www.likeoak.com" target="_blank" rel="external">一起学JAVA</a></p>
 <p>欢迎转载，但转载请注明来自 www.likeoak.com，并保持转载后文章内容的完整。本人保留所有版权相关权利</p>
-<p>本文链接：<a href="http://yoursite.com/about/index.html">http://yoursite.com/about/index.html</a></p>
+<p>本文链接：<a href="http://yoursite.com/2017/06/25/一起学JAVA之springBoot01-SpringBoot介绍/">http://yoursite.com/2017/06/25/一起学JAVA之springBoot01-SpringBoot介绍/</a></p>
 
             
 
@@ -371,13 +450,23 @@
 
           <!--  
     
-        <a href="http://yoursite.com/about/index.html#comments" class="article-comment-link ds-thread-count" data-thread-key="http://yoursite.com/about/index.html">评论</a>
+        <a href="http://yoursite.com/2017/06/25/一起学JAVA之springBoot01-SpringBoot介绍/#comments" class="article-comment-link ds-thread-count" data-thread-key="http://yoursite.com/2017/06/25/一起学JAVA之springBoot01-SpringBoot介绍/">评论</a>
     
 -->
         </footer>
     </div>
     
     
+<nav id="article-nav">
+    
+    
+        <a href="/2017/06/24/spring-boot-学习-搭建ssmm框架02/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">spring boot 学习--搭建ssmm框架02</div>
+        </a>
+    
+</nav>
+
 
     
 </article>
