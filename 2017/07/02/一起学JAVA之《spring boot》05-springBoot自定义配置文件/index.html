@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>一起学JAVA之《spring boot》05 - spring boot 自定义配置文件 | java程序猿</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="一、导航本节内容简介： 1. 新建一个测试自定义配置的模块 2. 自定义配置 3. 自定义配置文件 4. 配置文件属性验证">
+<meta name="keywords" content="springBoot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一起学JAVA之《spring boot》05 - spring boot 自定义配置文件">
+<meta property="og:url" content="http://yoursite.com/2017/07/02/一起学JAVA之《spring boot》05-springBoot自定义配置文件/index.html">
+<meta property="og:site_name" content="java程序猿">
+<meta property="og:description" content="一、导航本节内容简介： 1. 新建一个测试自定义配置的模块 2. 自定义配置 3. 自定义配置文件 4. 配置文件属性验证">
+<meta property="og:image" content="http://os1nquf60.bkt.clouddn.com/spring-boot-05-%E5%88%9B%E5%BB%BA%E5%AD%90%E6%A8%A1%E5%9D%97.png?imageMogr2/blur/1x0/quality/75|watermark/2/text/d3d3Lmxpa2VvYWsuY29t/font/5a6L5L2T/fontsize/240/fill/IzFEMDkwOQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10|imageslim">
+<meta property="og:image" content="http://os1nquf60.bkt.clouddn.com/sping-boot-05-%E5%88%9B%E5%BB%BA%E5%AD%90%E6%A8%A1%E5%9D%97-%E9%80%89%E6%8B%A9quickstart.png?imageMogr2/blur/1x0/quality/75|watermark/2/text/d3d3Lmxpa2VvYWsuY29t/font/5a6L5L2T/fontsize/240/fill/IzFEMDkwOQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10|imageslim">
+<meta property="og:updated_time" content="2017-07-02T15:45:45.668Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一起学JAVA之《spring boot》05 - spring boot 自定义配置文件">
+<meta name="twitter:description" content="一、导航本节内容简介： 1. 新建一个测试自定义配置的模块 2. 自定义配置 3. 自定义配置文件 4. 配置文件属性验证">
+<meta name="twitter:image" content="http://os1nquf60.bkt.clouddn.com/spring-boot-05-%E5%88%9B%E5%BB%BA%E5%AD%90%E6%A8%A1%E5%9D%97.png?imageMogr2/blur/1x0/quality/75|watermark/2/text/d3d3Lmxpa2VvYWsuY29t/font/5a6L5L2T/fontsize/240/fill/IzFEMDkwOQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10|imageslim">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">java程序猿</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">主页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">like</h2>
+            <h3 id="title">Web 开发攻城狮 &amp; Java开发攻城狮</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>中国，成都</span>
+            <a id="follow" target="_blank" href="https://github.com/likeaijiaqi/likeaijiaqi.github.io">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                9
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                1
+                <span>标签</span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-一起学JAVA之《spring boot》05-springBoot自定义配置文件" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        <header class="article-header">
+            
+    
+        <h1 class="article-title" itemprop="name">
+            一起学JAVA之《spring boot》05 - spring boot 自定义配置文件
+        </h1>
+    
+
+            
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/07/02/一起学JAVA之《spring boot》05-springBoot自定义配置文件/">
+            <time datetime="2017-07-02T15:33:38.000Z" itemprop="datePublished">2017-07-02</time>
+        </a>
+    </div>
+
+
+                
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/springBoot/">springBoot</a>
+    </div>
+
+            </div>
+            
+        </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+            
+            <h3 id="一、导航"><a href="#一、导航" class="headerlink" title="一、导航"></a>一、导航</h3><p>本节内容简介：</p>
+<pre><code>1. 新建一个测试自定义配置的模块
+2. 自定义配置
+3. 自定义配置文件
+4. 配置文件属性验证
+</code></pre><a id="more"></a>
+<h3 id="二、新建一个测试自定义配置的模块"><a href="#二、新建一个测试自定义配置的模块" class="headerlink" title="二、新建一个测试自定义配置的模块"></a>二、新建一个测试自定义配置的模块</h3><p>idea创建子模块流程</p>
+<ul>
+<li>在项目上新建模块</li>
+</ul>
+<p><img src="http://os1nquf60.bkt.clouddn.com/spring-boot-05-%E5%88%9B%E5%BB%BA%E5%AD%90%E6%A8%A1%E5%9D%97.png?imageMogr2/blur/1x0/quality/75|watermark/2/text/d3d3Lmxpa2VvYWsuY29t/font/5a6L5L2T/fontsize/240/fill/IzFEMDkwOQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10|imageslim" alt="新建子模块"></p>
+<ul>
+<li>然后选择create from archetype ，下面选择快速开始模块（也可以是其他模块）</li>
+</ul>
+<p> <img src="http://os1nquf60.bkt.clouddn.com/sping-boot-05-%E5%88%9B%E5%BB%BA%E5%AD%90%E6%A8%A1%E5%9D%97-%E9%80%89%E6%8B%A9quickstart.png?imageMogr2/blur/1x0/quality/75|watermark/2/text/d3d3Lmxpa2VvYWsuY29t/font/5a6L5L2T/fontsize/240/fill/IzFEMDkwOQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10|imageslim" alt="新建子模块quickstart"></p>
+<ul>
+<li>接着就是一直选择下一步直到完成，中间会配置项目名字等信息，就按照标准maven配置就是了</li>
+</ul>
+<p>有时候我们创建一个模块之后，发现下载模块信息很慢，就可以配置阿里云的私服<br>阿里私服镜像地址<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>alimaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h3 id="三、自定义配置"><a href="#三、自定义配置" class="headerlink" title="三、自定义配置"></a>三、自定义配置</h3><p>自定义配置是读取我们自己的配置文件或在application中的自定义数据</p>
+<ol>
+<li>在创建的模块中，创建一个ConfigController</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 配置测试类</div><div class="line"> * The type Config controller.</div><div class="line"> */</div><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigController</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;my.name : default_Like&#125;"</span>)</div><div class="line">    <span class="keyword">private</span>  String name;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;my.age&#125;"</span>)</div><div class="line">    <span class="keyword">private</span>  <span class="keyword">int</span> age;</div><div class="line"></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/testConfigure"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">testConfigure</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">return</span>  <span class="string">"name = "</span>+name +<span class="string">" age =  "</span>+age;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>在配置文件中，加如下配置<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">server.port=8083</div><div class="line"></div><div class="line"></div><div class="line">#自定义属性</div><div class="line"></div><div class="line">my.name=</div><div class="line">my.age=20</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>启动运行，访问：<a href="http://localhost:8083/testConfigure" target="_blank" rel="external">http://localhost:8083/testConfigure</a><br>结果：name = default_Like age = 20</p>
+<p>如果my.name 属性设置了值，就会返回的是my.name的值，否则就是默认的值</p>
+<h3 id="四、自定义配置文件"><a href="#四、自定义配置文件" class="headerlink" title="四、自定义配置文件"></a>四、自定义配置文件</h3><p>有时候我们在application中定义属性过多，这个时候我们就可以自定义配置文件，如下</p>
+<ul>
+<li><p>自定义配置文件person.properties,位置在src/main/resources中</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">person.name=like</div><div class="line">person.age=22</div><div class="line">person.gender=man</div></pre></td></tr></table></figure>
+</li>
+<li><p>自定义配置文件需要引入一个自动配置的jar</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--自定义配置所需jar包--&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-configuration-processor<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>创建PersonConfig类</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">package com.likeoak.config;</div><div class="line"></div><div class="line"></div><div class="line">import org.springframework.boot.context.properties.ConfigurationProperties;</div><div class="line">import org.springframework.context.annotation.PropertySource;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 自定义配置文件</div><div class="line"> * The type Person config.</div><div class="line"> */</div><div class="line">@Component</div><div class="line">@ConfigurationProperties(prefix = "person")</div><div class="line">@PropertySource(value = "classpath:person.properties")</div><div class="line">public class PersonConfig &#123;</div><div class="line">    private String name;</div><div class="line">    private Integer age;</div><div class="line">    private String gender;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Integer getAge() &#123;</div><div class="line">        return age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setAge(Integer age) &#123;</div><div class="line">        this.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getGender() &#123;</div><div class="line">        return gender;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setGender(String gender) &#123;</div><div class="line">        this.gender = gender;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return "PersonConfig&#123;" +</div><div class="line">                "name='" + name + '\'' +</div><div class="line">                ", age=" + age +</div><div class="line">                ", gender='" + gender + '\'' +</div><div class="line">                '&#125;';</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>代码解释</strong><br><strong>@Component</strong> 将这个配置类声明为一个bean<br><strong>@ConfigurationProperties</strong> 自定义配置注解，prefix 指的是当前配置文件中属性的前缀<br><strong>@PropertySource</strong> 扫描配置文件路径注解，在1.5以前可以用@ConfigurationProperties的location注解来指定文件路径，1.5之后就用这个注解来指定</p>
+<ul>
+<li>配置测试类<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 配置测试类</div><div class="line"> * The type Config controller.</div><div class="line"> */</div><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigController</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;my.name : default_Like&#125;"</span>)</div><div class="line">    <span class="keyword">private</span>  String name;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;my.age&#125;"</span>)</div><div class="line">    <span class="keyword">private</span>  <span class="keyword">int</span> age;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> PersonConfig personConfig;</div><div class="line"></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/testConfigure"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">testConfigure</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">return</span>  <span class="string">"name = "</span>+name +<span class="string">" age =  "</span>+age;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/testPersonConfig"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String  <span class="title">testPersonConfig</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> personConfig.toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>启动，访问<a href="http://localhost:8083/testPersonConfig" target="_blank" rel="external">http://localhost:8083/testPersonConfig</a><br>结果：PersonConfig{name=’like’, age=22, gender=’man’}</p>
+<h3 id="五、配置文件属性验证"><a href="#五、配置文件属性验证" class="headerlink" title="五、配置文件属性验证"></a>五、配置文件属性验证</h3><p>spring boot 也可以校验外部配置，默认使用JSR-303，在@ConfigurationProperties类添加JSR-303 javax.validation约束注解</p>
+<p><strong>1. 测试没有加验证的情况</strong></p>
+<ul>
+<li>删除person.properties配置文件中的person.name属性</li>
+</ul>
+<p>启动程序，访问<a href="http://localhost:8083/testPersonConfig" target="_blank" rel="external">http://localhost:8083/testPersonConfig</a><br><strong>结果：PersonConfig{name=’null’, age=22, gender=’man’}</strong></p>
+<ol>
+<li>在代码上加入验证<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 自定义配置文件</div><div class="line"> * The type Person config.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"person"</span>)</div><div class="line"><span class="meta">@PropertySource</span>(value = <span class="string">"classpath:person.properties"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonConfig</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@NotNull</span></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line">    <span class="keyword">private</span> Integer age;</div><div class="line">    <span class="keyword">private</span> String gender;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getAge</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(Integer age)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getGender</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> gender;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setGender</span><span class="params">(String gender)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.gender = gender;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"PersonConfig&#123;"</span> +</div><div class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">", age="</span> + age +</div><div class="line">                <span class="string">", gender='"</span> + gender + <span class="string">'\''</span> +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>启动：<br>结果：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">***************************</div><div class="line">APPLICATION FAILED TO START</div><div class="line">***************************</div><div class="line"></div><div class="line">Description:</div><div class="line"></div><div class="line">Binding to target PersonConfig&#123;name='null', age=22, gender='man'&#125; failed:</div><div class="line"></div><div class="line">    Property: person.name</div><div class="line">    Value: null</div><div class="line">    Reason: 不能为null</div><div class="line"></div><div class="line"></div><div class="line">Action:</div></pre></td></tr></table></figure></p>
+<p>欢迎转载，但转载请注明来自 www.likeoak.com，并保持转载后文章内容的完整。本人保留所有版权相关权利</p>
+<p>本文链接：<a href="http://yoursite.com/2017/07/02/一起学JAVA之《spring">http://yoursite.com/2017/07/02/一起学JAVA之《spring</a> boot》05-springBoot自定义配置文件/</p>
+
+            
+
+
+        </div>
+
+
+
+        <!-- 打赏功能 -->
+        
+
+        
+        <!-- css -->
+        <style type="text/css">
+            .center {
+                text-align: center;
+            }
+            .hidden {
+                display: none;
+            }
+            .donate_bar a.btn_donate{
+                display: inline-block;
+                width: 82px;
+                height: 82px;
+                background: url("http://7xsl28.com1.z0.glb.clouddn.com/btn_reward.gif") no-repeat;
+                _background: url("http://7xsl28.com1.z0.glb.clouddn.com/btn_reward.gif") no-repeat;
+
+            <!-- http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif
+            因为本 hexo 生成的博客所用的 theme 的 a:hover 带动画效果，
+            为了在让打赏按钮显示效果正常 而 添加了以下几行 css，
+            嵌入其它博客时不一定要它们。 -->
+                -webkit-transition: background 0s;
+                -moz-transition: background 0s;
+                -o-transition: background 0s;
+                -ms-transition: background 0s;
+                transition: background 0s;
+            <!-- /让打赏按钮的效果显示正常 而 添加的几行 css 到此结束 -->
+            }
+
+            .donate_bar a.btn_donate:hover{ background-position: 0px -82px;}
+            .donate_bar .donate_txt {
+                display: block;
+                color: #9d9d9d;
+                font: 14px/2 "Microsoft Yahei";
+            }
+            .bold{ font-weight: bold; }
+        </style>
+        <!-- /css -->
+
+        <!-- Donate Module -->
+        <div id="donate_module">
+
+            <!-- btn_donate & tips -->
+            <div id="donate_board" class="donate_bar center">
+                <br>
+                ------------------------------------------------------------------------------------------------------------------------------
+                <br>
+                <a id="btn_donate" class="btn_donate" target="_self" href="javascript:;" title="打赏"></a>
+                <span class="donate_txt">
+                欣赏此文？求鼓励，求支持！
+                </span>
+                <br/>
+                <br/>
+                <!--文章阅读量-->
+                <span id="busuanzi_container_page_pv">
+                本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+                </span>
+
+
+            </div>
+            <!-- /btn_donate & tips -->
+
+            <!-- donate guide -->
+
+            <div id="donate_guide" class="donate_bar center hidden">
+                <br>
+                ------------------------------------------------------------------------------------------------------------------------------
+                <br>
+
+                <a href="http://os1nquf60.bkt.clouddn.com/weixin.png" title="用微信扫一扫哦~" class="fancybox" rel="article0">
+                    <img src="http://os1nquf60.bkt.clouddn.com/weixin.png" title="微信打赏 like" height="190px" width="auto"/>
+                </a>
+
+
+
+                <a href="http://os1nquf60.bkt.clouddn.com/aipay.png" title="用支付宝扫一扫即可~" class="fancybox" rel="article0">
+                    <img src="http://os1nquf60.bkt.clouddn.com/aipay.png" title="支付宝打赏 like" height="190px" width="auto"/>
+                </a>
+
+    <span class="donate_txt">
+      欣赏此文？求鼓励，求支持！
+    </span>
+
+            </div>
+            <!-- /donate guide -->
+
+            <!-- donate script -->
+            <script type="text/javascript">
+                document.getElementById('btn_donate').onclick = function() {
+                    $('#donate_board').addClass('hidden');
+                    $('#donate_guide').removeClass('hidden');
+                }
+
+                function donate_on_web(){
+                    $('#donate').submit();
+                }
+
+                var original_window_onload = window.onload;
+                window.onload = function () {
+                    if (original_window_onload) {
+                        original_window_onload();
+                    }
+                    document.getElementById('donate_board_wdg').className = 'hidden';
+                }
+            </script>
+            <!-- /donate script -->
+        </div>
+        <!-- /Donate Module -->
+        
+
+
+        
+
+
+
+
+
+
+
+
+        <footer class="article-footer">
+            <div class="share-container">
+
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+</div>
+
+          <!--  
+    
+        <a href="http://yoursite.com/2017/07/02/一起学JAVA之《spring boot》05-springBoot自定义配置文件/#comments" class="article-comment-link ds-thread-count" data-thread-key="http://yoursite.com/2017/07/02/一起学JAVA之《spring boot》05-springBoot自定义配置文件/">评论</a>
+    
+-->
+        </footer>
+    </div>
+    
+    
+<nav id="article-nav">
+    
+    
+        <a href="/2017/06/28/一起学JAVA之《spring-boot》04-spring-boot-自定义（外化）配置/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">一起学JAVA之《spring boot》04 - spring boot 自定义（外化）配置</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+
+    
+        <section id="comments"><div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href,
+    sourceId: "",
+    productKey: "11f97202006a4688905963e8c3a9f5ce",
+    target: "cloud-tie-wrapper"
+  };
+  var yunManualLoad = true;
+  Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+</script>
+</section>
+    
+
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/07/02/一起学JAVA之《spring boot》05-springBoot自定义配置文件/" class="title">一起学JAVA之《spring boot》05 - spring boot 自定义配置文件</a></p>
+                            <p class="item-date"><time datetime="2017-07-02T15:33:38.000Z" itemprop="datePublished">2017-07-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/28/一起学JAVA之《spring-boot》04-spring-boot-自定义（外化）配置/" class="title">一起学JAVA之《spring boot》04 - spring boot 自定义（外化）配置</a></p>
+                            <p class="item-date"><time datetime="2017-06-28T15:16:36.000Z" itemprop="datePublished">2017-06-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/27/一起学JAVA之《spring-boot》03-开始spring-boot基本配置及项目结构/" class="title">一起学JAVA之《spring boot》03 - 开始spring boot基本配置及项目结构</a></p>
+                            <p class="item-date"><time datetime="2017-06-27T15:00:54.000Z" itemprop="datePublished">2017-06-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/27/一起学JAVA之《spring boot》目录/" class="title">一起学JAVA之《spring boot》目录</a></p>
+                            <p class="item-date"><time datetime="2017-06-26T16:39:00.000Z" itemprop="datePublished">2017-06-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/25/一起学JAVA之springBoot02-开发您的第一个Spring Boot应用程序/" class="title">一起学JAVA之《spring boot》02-开发您的第一个Spring Boot应用程序</a></p>
+                            <p class="item-date"><time datetime="2017-06-25T12:00:00.000Z" itemprop="datePublished">2017-06-25</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/springBoot/">springBoot</a><span class="tag-list-count">9</span></li></ul>
+        </div>
+    </div>
+
+    
+        <!--
+
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/springBoot/" style="font-size: 10px;">springBoot</a>
+        </div>
+    </div>
+-->
+
+<div class="widget-wrap">
+    <h3 class="widget-title">学习群</h3>
+    <div class="widget tagcloud">
+        一起学JAVA之springboot学习群：581665151
+    </div>
+</div>
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+               <!-- 
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                -->
+
+                <li>
+                    <a href="http://blog.csdn.net/javastudyr">csdn博客连接</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+    </span>
+
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 java程序猿 | 博客-李科 版权所有<br>
+           <!-- Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>-->
+        </div>
+    </div>
+</footer>
+        <!--
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href,
+    sourceId: "",
+    productKey: "11f97202006a4688905963e8c3a9f5ce",
+    target: "cloud-tie-wrapper"
+  };
+  var yunManualLoad = true;
+  Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+</script>
+
+
+-->
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
